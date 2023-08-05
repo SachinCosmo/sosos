@@ -24,7 +24,7 @@ def main():
     statistics = pd.DataFrame({
       "Number of Visitors": 1000,
       "Average Time Spent on Page": 2,
-      "Bounce Rate": 10%,
+      "Bounce Rate": 10%
     })
     st.dataframe(statistics)
 
