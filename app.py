@@ -1,40 +1,51 @@
 import streamlit as st
-import pandas as pd
+import json
 
-def main():
-  # Create a title for the dashboard
-  st.title("Dashboard")
+st.set_page_config(page_title="Reminder App", page_icon=":bell:", layout="centered")
 
-  # Create a sidebar with a dropdown menu
-  with st.sidebar:
-    options = ["Profile", "Statistics", "About"]
-    option = st.selectbox("Select an option", options)
+login, signup = st.tabs(["Login", "Signup"])
 
-  # Display the profile information if the user selects "Profile"
-  if option == "Profile":
-    profile = pd.DataFrame({
-      "Name": ["Hennifer Doe"],
-      "Email": ["hennifer.doe@email.com"],
-      "Location": ["San Francisco, CA"],
-    })
-    st.dataframe(profile)
 
-  # Display the statistics if the user selects "Statistics"
-  elif option == "Statistics":
-    statistics = pd.DataFrame({
-      "Number of Visitors": 1000,
-      "Average Time Spent on Page": 2,
-      "Bounce Rate": 10,
-    })
-    st.dataframe(statistics)
+@st.cache_data
+def loadFile():
+    with open("database/test.json") as json_file:
+       return  json.load(json_file)
+        
+    
+def saveFile(data):
+    with open("database/test.json", "w") as file:
+        json.dump(data, file, indent=4)
 
-  # Display the about information if the user selects "About"
-  else:
-    about = """
-    This is a simple dashboard created with Streamlit.
-    You can select an option from the sidebar to display different information.
-    """
-    st.write(about)
+def LoginPage():
+    st.title("Login")
+    username = st.text_input("Username", key="username")
+    password = st.text_input("Password", type="password", key="password")
+    if st.button("Login"):
+        data = loadFile()
+        for user in data["users"]:
+            if username == user["username"] and password == user["password"]:
+                st.success("Logged in as {}".format(username))
+                st.balloons()  
+            else:
+                st.error("Incorrect username or password")
+            
+def SignupPage():
+    st.title("Signup")
+    username = st.text_input("Username", key="svusername")
+    email = st.text_input("Email", key="svemail")
+    password = st.text_input("Password", type="password", key="svpassword")
+    if st.button("Signup"):
+        data = loadFile()
+        data["users"].append({"username": username, "password": password, "email": email})
+        saveFile(data)
+        st.success("Successfully signed up as {}".format(username))
+            
+with login:
+    LoginPage()
+    
+with signup:
+    SignupPage()
 
-if __name__ == "__main__":
-  main()
+
+
+
