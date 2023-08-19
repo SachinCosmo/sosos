@@ -27,7 +27,7 @@ def LoginPage():
             if username == user["username"] and password == user["password"]:
                 st.success("Logged in as {}".format(username))
                 st.balloons() 
-                page()
+                home.page()
             else:
                 st.error("Incorrect username or password")
             
