@@ -1,5 +1,6 @@
 import streamlit as st
 import json
+from pages.home import page
 
 st.set_page_config(page_title="Reminder App", page_icon=":bell:", layout="centered")
 
@@ -25,7 +26,8 @@ def LoginPage():
         for user in data["users"]:
             if username == user["username"] and password == user["password"]:
                 st.success("Logged in as {}".format(username))
-                st.balloons()  
+                st.balloons() 
+                page()
             else:
                 st.error("Incorrect username or password")
             
