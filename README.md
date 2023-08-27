@@ -1,4 +1,3 @@
-# Cosmo
 ---
 title: CosmoS
 emoji: 📉
