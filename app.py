@@ -7,7 +7,7 @@ from bardapi import Bard
 
 # load_dotenv()
 
-bardKey = "aQjBGndz_p9qdmaTSfmedlQODTMCa8iPeurM5mlJbzBzLISxmHRjXS-SIhbK_WsL3WIFUA."
+# bardKey = "aQjBGndz_p9qdmaTSfmedlQODTMCa8iPeurM5mlJbzBzLISxmHRjXS-SIhbK_WsL3WIFUA."
 # os.environ.get('token')
 
 def bardChat(data):
@@ -25,10 +25,10 @@ def bardChat(data):
             }
     
     # Set the "__Secure-1PSID" cookie with the Bard API key
-    session.cookies.set("__Secure-1PSID", bardKey) 
+    session.cookies.set("__Secure-1PSID", "aQjBGndz_p9qdmaTSfmedlQODTMCa8iPeurM5mlJbzBzLISxmHRjXS-SIhbK_WsL3WIFUA.") 
     
     # Create a Bard object with the session and a timeout of 30 seconds
-    bard = Bard(token=bardKey, session=session, timeout=30)
+    bard = Bard(token="aQjBGndz_p9qdmaTSfmedlQODTMCa8iPeurM5mlJbzBzLISxmHRjXS-SIhbK_WsL3WIFUA.", session=session, timeout=30)
     answer = bard.get_answer(data)['content']
     print(answer)
     reply = {
