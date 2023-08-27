@@ -5,8 +5,6 @@ from bardapi import Bard
 
 bardKey = os.environ.get('_BARD_API_KEY')
 
-
-
 def bardChat(data):
     # Create a session object using the requests library
     session = requests.Session()
@@ -31,6 +29,7 @@ def bardChat(data):
     
     return json.dumps({'message':answer,'action':'null'})
 
-uinput = input("You: ")
-print(f"Uoy: {bardChat(uinput)}")
+uinput = st.chat_input("Enter your message")
+with st.chat_message("assistant"):
+    st.markdown(bardChat(uinput))
     
