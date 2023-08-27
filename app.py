@@ -3,6 +3,9 @@ import os
 import streamlit as st
 import json
 from bardapi import Bard
+from dotenv import load_dotenv
+
+load_dotenv()
 
 bardKey = os.environ.get('_BARD_API_KEY')
 
@@ -27,10 +30,14 @@ def bardChat(data):
     bard = Bard(token=bardKey, session=session, timeout=30)
     answer = bard.get_answer(data)['content']
     print(answer)
-    
-    return json.dumps({'message':answer,'action':'null'})
+    reply = {
+        'message':answer,
+        'action':'null'
+    }
+    return reply
 
 uinput = st.chat_input("Enter your message")
 with st.chat_message("assistant"):
-    st.markdown(bardChat(uinput))
+    bardanswer = bardChat(uinput)
+    st.markdown(bardanswer['message'])
     
