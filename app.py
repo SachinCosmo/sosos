@@ -1,53 +1,36 @@
-import streamlit as st
+import requests
+import os
 import json
-from pages.home import page
+from bardapi import Bard
 
-st.set_page_config(page_title="Reminder App", page_icon=":bell:", layout="centered")
-
-login, signup = st.tabs(["Login", "Signup"])
+bardKey = os.environ.get('_BARD_API_KEY')
 
 
-@st.cache_data
-def loadFile():
-    with open("database/test.json") as json_file:
-       return  json.load(json_file)
-        
+
+def bardChat(data):
+    # Create a session object using the requests library
+    session = requests.Session()
     
-def saveFile(data):
-    with open("database/test.json", "w") as file:
-        json.dump(data, file, indent=4)
-
-def LoginPage():
-    st.title("Login")
-    username = st.text_input("Username", key="username")
-    password = st.text_input("Password", type="password", key="password")
-    if st.button("Login"):
-        data = loadFile()
-        for user in data["users"]:
-            if username == user["username"] and password == user["password"]:
-                st.success("Logged in as {}".format(username))
-                st.balloons() 
-                home.page()
-            else:
-                st.error("Incorrect username or password")
-            
-def SignupPage():
-    st.title("Signup")
-    username = st.text_input("Username", key="svusername")
-    email = st.text_input("Email", key="svemail")
-    password = st.text_input("Password", type="password", key="svpassword")
-    if st.button("Signup"):
-        data = loadFile()
-        data["users"].append({"username": username, "password": password, "email": email})
-        saveFile(data)
-        st.success("Successfully signed up as {}".format(username))
-            
-with login:
-    LoginPage()
+    # Set the headers for the session
+    session.headers = {
+                "Host": "bard.google.com",
+                "X-Same-Domain": "1",
+                "User-Agent": "Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.114 Safari/537.36",
+                "Content-Type": "application/x-www-form-urlencoded;charset=UTF-8",
+                "Origin": "https://bard.google.com",
+                "Referer": "https://bard.google.com/",
+            }
     
-with signup:
-    SignupPage()
+    # Set the "__Secure-1PSID" cookie with the Bard API key
+    session.cookies.set("__Secure-1PSID", bardKey) 
+    
+    # Create a Bard object with the session and a timeout of 30 seconds
+    bard = Bard(token=bardKey, session=session, timeout=30)
+    answer = bard.get_answer(data)['content']
+    print(answer)
+    
+    return json.dumps({'message':answer,'action':'null'})
 
-
-
-
+uinput = input("You: ")
+print(f"Uoy: {bardChat(uinput)}")
+    
