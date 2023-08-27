@@ -4,7 +4,7 @@ import streamlit as st
 cookie_path = 'cookies.json'
 chatbot = hugchat.ChatBot(cookie_path=cookie_path)
 
-response = await chatbot.start_conversation('Hello!')
+response = chatbot.start_conversation('Hello!')
 print(response)
 
 # chatbot = hugchat.ChatBot(cookie_path="home/user/cookies.json")
