@@ -44,4 +44,4 @@ st.markdown(
 )
 
 # Add the centered button
-st.button("Explore the Universe", key="explore_button", class_="centered-button")
+st.button("Explore Infinite", key="explore_button")
