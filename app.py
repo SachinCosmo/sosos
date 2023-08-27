@@ -1,7 +1,7 @@
 from hugchat import hugchat
 import streamlit as st
 
-chatbot = hugchat.ChatBot(cookie_path="cookies.json")
+chatbot = hugchat.ChatBot(cookie_path="home/user/cookies.json")
 with st.chat_message:
     st.markdown(chatbot.chat("Hi"))
     
