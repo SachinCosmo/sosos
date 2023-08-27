@@ -38,10 +38,8 @@ st.markdown(
             <source src="universe.mp4" type="video/mp4">
             Your browser does not support the video tag.
         </video>
+        <button class="centered-button">Explore Infinite</button>
     </div>
     """,
     unsafe_allow_html=True
 )
-
-# Add the centered button
-st.button("Explore Infinite", key="explore_button")
