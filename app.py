@@ -1,67 +1,47 @@
 import streamlit as st
-from streamlit_option_menu import option_menu
-import json
-from Home import dashboard
 
+# Add a custom CSS style for the background video and centered button
+st.markdown(
+    """
+    <style>
+    .fullscreen-bg {
+        position: fixed;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        left: 0;
+        overflow: hidden;
+        z-index: -1;
+    }
+    .fullscreen-bg video,
+    .fullscreen-bg img {
+        width: 100%;
+        height: auto;
+    }
+    .centered-button {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        z-index: 1;
+    }
+    </style>
+    """,
+    unsafe_allow_html=True
+)
 
+# Add the background video or GIF
+st.markdown(
+    """
+    <div class="fullscreen-bg">
+        <video loop muted autoplay playsinline>
+            <source src="universe.mp4" type="video/mp4">
+            Your browser does not support the video tag.
+        </video>
+    </div>
+    """,
+    unsafe_allow_html=True
+)
 
-st.page_config(page_title="Auth", page_icon=":lock:")
-
-
-def loadfile():
-    with open("database/users.json") as file:
-        data = json.load(file)
-    return data
-
-def savefile(data):
-    with open("database/users.json", "w") as file:
-        json.dump(data, file, indent=4)
-
-
-
-def login():
-    st.write("Login")
-    username = st.text_input("Username")
-    password = st.text_input("Password", type="password")
-    if st.button("Login"):
-        data = loadfile()
-        if username in data:
-            if data[username]["password"] == password:
-                st.success("Logged In as {}".format(username))
-                st.session_state.user = username
-            else:
-                st.error("Wrong Password")
-        else:
-            st.error("User not found")
-            
-            
-def register():
-    st.write("Register")
-    username = st.text_input("Username")
-    password = st.text_input("Password", type="password")
-    if st.button("Register"):
-        data = loadfile()
-        if username in data:
-            st.error("User already exists")
-        else:
-            data[username] = {}
-            data[username]["password"] = password
-            savefile(data)
-            st.success("User created")
-
-
-
-
-def main():
-    if 'user' not in st.session_state:
-        st.session_state.user = None
-        
-    if st.session_state.user is None:
-        with st.sidebar:
-            selected = option_menu(None, ['Login', 'Register'])
-            if selected == 'Login':
-                login()
-            elif selected == 'Register':
-                register()
-    else:
-        dashboard()
+# Add the centered button
+st.button("Explore the Universe", key="explore_button", class_="centered-button")
