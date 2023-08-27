@@ -5,7 +5,7 @@ from Home import dashboard
 import pymongo
 
 
-st.page_config(page_title="Auth", page_icon=":lock:")
+st.page_config(page_title="Auth", page_icon=":lock:") 
 
 
 
