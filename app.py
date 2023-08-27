@@ -3,7 +3,7 @@ from hugchat.login import Login
 import streamlit as st 
 
 # Log in to huggingface and grant authorization to huggingchat
-sign = Login(mecosmo369@gmail.com, @_3SegZXGjrjff/)
+sign = Login("mecosmo369@gmail.com", "@_3SegZXGjrjff/")
 cookies = sign.login()
 
 # Save cookies to the local directory
