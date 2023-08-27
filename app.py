@@ -7,7 +7,7 @@ from dotenv import load_dotenv
 
 load_dotenv()
 
-bardKey = os.environ'token')
+bardKey = os.environ('token')
 
 def bardChat(data):
     # Create a session object using the requests library
