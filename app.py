@@ -3,11 +3,12 @@ import os
 import streamlit as st
 import json
 from bardapi import Bard
-from dotenv import load_dotenv
+# from dotenv import load_dotenv
 
-load_dotenv()
+# load_dotenv()
 
-bardKey = os.environ.get('token')
+bardKey = "aQjBGndz_p9qdmaTSfmedlQODTMCa8iPeurM5mlJbzBzLISxmHRjXS-SIhbK_WsL3WIFUA."
+# os.environ.get('token')
 
 def bardChat(data):
     # Create a session object using the requests library
