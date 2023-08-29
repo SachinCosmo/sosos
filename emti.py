@@ -1,14 +1,18 @@
 import pymongo
-from pymongo.mongo_client import MongoClient
 
-uri = "mongodb+srv://cosmo:<cosmo>@cluster0.nfkbemi.mongodb.net/?retryWrites=true&w=majority"
 
-# Create a new client and connect to the server
-client = MongoClient(uri)
+uri = "mongodb+srv://<cosmo>:<cosmo>@cluster0.nfkbemi.mongodb.net/?retryWrites=true&w=majority"
 
-# Send a ping to confirm a successful connection
-try:
-    client.admin.command('ping')
-    print("Pinged your deployment. You successfully connected to MongoDB!")
-except Exception as e:
-    print(e)
+client = pymongo.MongoClient(uri)
+
+
+db = client['Cosmo']
+
+col = db['Users']
+
+test = {
+    "name": "Cosmo",
+    "age": 21,
+}
+
+col.insert_one(test)
