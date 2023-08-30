@@ -27,9 +27,6 @@ def invoke_image():
     st.write("Invoke Image")
     st.write("Welcome to the invoke image page")
     
-def invoke_text():
-    st.write("Invoke Text")
-    st.write("Welcome to the invoke text page")
     
 
 
@@ -37,8 +34,8 @@ def invoke_text():
 def dashboard():
     
     with st.sidebar:
-        selected = option_menu(None, ['Home', 'Chat', "Invoke Document", "Invoke Audio", "Invoke Video", "Invoke Image", "Invoke Text"],
-                               icons=['🏠', '💬', "📄", "🔊", "🎥", "🖼️", "📝"])
+        selected = option_menu(None, ['Home', 'Chat', "Invoke Document", "Invoke Audio", "Invoke Video", "Invoke Image", "Logout"],
+                               icons=['🏠', '💬', "📄", "🔊", "🎥", "🖼️", "🚪"])
         if selected == 'Home':
             homepage()
         elif selected == 'Chat':
@@ -51,6 +48,7 @@ def dashboard():
             invoke_video()
         elif selected == "Invoke Image":
             invoke_image()
-        elif selected == "Invoke Text":
-            invoke_text()
+        elif selected == "Logout":
+            st.session_state.user = None
+            st.experimental_rerun()
         
