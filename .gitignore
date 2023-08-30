@@ -6,3 +6,4 @@ emti.py
 dev/
 certificate.pem
 __pycache__/
+testing.py

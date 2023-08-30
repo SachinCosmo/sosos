@@ -21,7 +21,7 @@ st.markdown(hide, unsafe_allow_html=True)
 
 from pymongo.mongo_client import MongoClient
 
-uri = os.enviorn.get("MONGO_CONNECTION_STRING")
+uri = os.environ.get("MONGO_CONNECTION_STRING")
 
 # Create a new client and connect to the server
 client = MongoClient(uri)
@@ -39,14 +39,13 @@ db = client['Cosmo']
 
 col = db['Users']
 
-test = {
-    "name": "Cosmo",
-    "age": 21,
+newuser = {
+    "username": "username",
+    "password": "password",
 }
 
-col.insert_one(test)
 
-
+col.insert_one(newuser)
 
 def login():
     st.write("Login")
@@ -65,7 +64,12 @@ def register():
     st.write("Register")
     username = st.text_input("Username")
     password = st.text_input("Password", type="password")
+    newuser = {
+    "username": username,
+    "password": password,
+}
     if st.button("Register"):
+        col.insert_one(newuser)
         if username in col.find():
             st.error("User already exists")
         else:
