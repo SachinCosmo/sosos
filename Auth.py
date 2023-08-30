@@ -4,7 +4,7 @@ import json
 from Home import dashboard
 import pymongo
 import os
-import certifi
+# import certifi
 
 
 
