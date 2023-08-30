@@ -3,13 +3,8 @@ from streamlit_option_menu import option_menu
 import json
 from Home import dashboard
 import pymongo
-import ssl
 import os
 import certifi
-
-ssl_certfile='certificate.pem'
-
-ssl_context = ssl.create_default_context(cafile=ssl_certfile)
 
 
 
@@ -24,9 +19,19 @@ footer {visibility: hidden;}
 st.markdown(hide, unsafe_allow_html=True)
 
 
-uri = os.environ.get('MONGO_CONNECTION_STRING')
+from pymongo.mongo_client import MongoClient
 
-client = pymongo.MongoClient(uri, ssl=True)
+uri = os.enviorn.get("MONGO_CONNECTION_STRING")
+
+# Create a new client and connect to the server
+client = MongoClient(uri)
+
+# Send a ping to confirm a successful connection
+try:
+    client.admin.command('ping')
+    print("Pinged your deployment. You successfully connected to MongoDB!")
+except Exception as e:
+    print(e)
 
 
   
