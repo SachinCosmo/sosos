@@ -2,7 +2,14 @@ import streamlit as st
 from streamlit_option_menu import option_menu
 import json
 from Home import dashboard
-# import pymongo
+import pymongo
+import ssl
+import os
+import certifi
+
+ssl_certfile='certificate.pem'
+
+ssl_context = ssl.create_default_context(cafile=ssl_certfile)
 
 
 
@@ -10,7 +17,6 @@ st.set_page_config(page_title="Auth", page_icon=":lock:")
 
 hide = """
 <style>
-#MainMenu {visibility: hidden;}
 footer {visibility: hidden;}
 </style>
 """
@@ -18,29 +24,22 @@ footer {visibility: hidden;}
 st.markdown(hide, unsafe_allow_html=True)
 
 
-# from pymongo.mongo_client import MongoClient
+uri = os.environ.get('MONGO_CONNECTION_STRING')
 
-# uri = "mongodb+srv://cosmo:<cosmo>@cluster0.nfkbemi.mongodb.net/?retryWrites=true&w=majority"
-
-# # Create a new client and connect to the server
-# client = MongoClient(uri)
-
-# # Send a ping to confirm a successful connection
-# try:
-#     client.admin.command('ping')
-#     print("Pinged your deployment. You successfully connected to MongoDB!")
-# except Exception as e:
-#     print(e)
+client = pymongo.MongoClient(uri, ssl=True)
 
 
-def loadfile():
-    with open("database/users.json") as file:
-        data = json.load(file)
-    return data
+  
+db = client['Cosmo']
 
-def savefile(data):
-    with open("database/users.json", "w") as file: 
-        json.dump(data, file, indent=4)
+col = db['Users']
+
+test = {
+    "name": "Cosmo",
+    "age": 21,
+}
+
+col.insert_one(test)
 
 
 
@@ -49,15 +48,12 @@ def login():
     username = st.text_input("Username")
     password = st.text_input("Password", type="password")
     if st.button("Login"):
-        data = loadfile()
-        if username in data:
-            if data[username]["password"] == password:
-                st.success("Logged In as {}".format(username))
+        if username in col.find():
+            if password in col.find():
                 st.session_state.user = username
+                st.experimental_rerun()
             else:
-                st.error("Wrong Password")
-        else:
-            st.error("User not found")
+                st.error("Incorrect password")
             
             
 def register():
@@ -65,13 +61,10 @@ def register():
     username = st.text_input("Username")
     password = st.text_input("Password", type="password")
     if st.button("Register"):
-        data = loadfile()
-        if username in data:
+        if username in col.find():
             st.error("User already exists")
         else:
-            data["username"] = username
-            data[username]["password"] = password
-            savefile(data)
+            col.insert_one({"username": username, "password": password})
             st.success("User created")
 
 
@@ -84,10 +77,10 @@ def main():
     if st.session_state.user is None:
         with st.sidebar:
             selected = option_menu(None, ['Login', 'Register'])
-            if selected == 'Login':
-                login()
-            elif selected == 'Register':
-                register()
+        if selected == 'Login':
+            login()
+        elif selected == 'Register':
+            register()
     else:
         dashboard()
 
