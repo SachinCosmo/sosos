@@ -2,13 +2,8 @@ import streamlit as st
 from streamlit_option_menu import option_menu
 import json
 from Home import dashboard
-import pymongo
-
-
-st.page_config(page_title="Auth", page_icon=":lock:") 
-
-
 # import pymongo
+
 
 
 st.set_page_config(page_title="Auth", page_icon=":lock:") 
