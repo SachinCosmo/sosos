@@ -8,6 +8,15 @@ from Home import dashboard
 
 st.set_page_config(page_title="Auth", page_icon=":lock:") 
 
+hide = """
+<style>
+#MainMenu {visibility: hidden;}
+footer {visibility: hidden;}
+</style>
+"""
+
+st.markdown(hide, unsafe_allow_html=True)
+
 
 # from pymongo.mongo_client import MongoClient
 
@@ -60,7 +69,7 @@ def register():
         if username in data:
             st.error("User already exists")
         else:
-            data[username] = {}
+            data["username"] = username
             data[username]["password"] = password
             savefile(data)
             st.success("User created")
