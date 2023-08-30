@@ -3,3 +3,6 @@ CosmoS
 sosos
 emti.py
 .env
+dev/
+certificate.pem
+__pycache__/
