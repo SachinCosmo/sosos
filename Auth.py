@@ -2,7 +2,7 @@ import streamlit as st
 from streamlit_option_menu import option_menu
 import json
 from Home import dashboard
-import pymongo
+from pymongo.mongo_client import MongoClient
 import os
 # import certifi
 
@@ -19,7 +19,7 @@ footer {visibility: hidden;}
 st.markdown(hide, unsafe_allow_html=True)
 
 
-from pymongo.mongo_client import MongoClient
+
 
 uri = os.environ.get("MONGO_CONNECTION_STRING")
 
