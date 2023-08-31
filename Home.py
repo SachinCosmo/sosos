@@ -49,6 +49,6 @@ def dashboard():
         elif selected == "Invoke Image":
             invoke_image()
         elif selected == "Logout":
-            st.session_state.user = None
+            st.session_state["user"] = "Guest"
             st.experimental_rerun()
         
