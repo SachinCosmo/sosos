@@ -1,3 +1,4 @@
 streamlit
 streamlit-option-menu
 pymongo==3.11.1
+dnspython
