@@ -76,7 +76,7 @@ def main():
     if 'user' not in st.session_state:
         st.session_state.user = "Guest"
         
-    if st.session_state["user"] == "Guest":
+    if st.session_state.user == "Guest":
         with st.sidebar:
             selected = option_menu(None, ['Login', 'Register'])
         if selected == 'Login':
