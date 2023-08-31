@@ -48,7 +48,7 @@ def login():
     if st.button("Login"):
         if username in col.find():
             if password in col.find():
-                st.session_state['user'] = "Logged"
+                st.session_state["user"] = "Logged"
                 st.experimental_rerun()
             else:
                 st.error("Incorrect password")
@@ -74,16 +74,16 @@ def register():
 
 def main():
     if "user" not in st.session_state:
-        st.session_state['user'] = "Guest"
+        st.session_state["user"] = "Guest"
         
-    if st.session_state['user'] == "Guest":
+    if st.session_state["user"] == "Guest":
         with st.sidebar:
             selected = option_menu(None, ['Login', 'Register'])
         if selected == 'Login':
             login()
         elif selected == 'Register':
             register()
-    elif st.session_state['user'] == "Logged":
+    elif st.session_state["user"] == "Logged":
         dashboard()
 
 
