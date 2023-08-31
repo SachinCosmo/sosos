@@ -2,9 +2,10 @@ import streamlit as st
 from streamlit_option_menu import option_menu
 import json
 from Home import dashboard
-from pymongo.mongo_client import MongoClient
+
 import os
-# import certifi
+import pymongo
+from pymongo.mongo_client import MongoClient
 
 
 
