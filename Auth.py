@@ -22,7 +22,7 @@ st.markdown(hide, unsafe_allow_html=True)
 
 
 
-uri = secrets.MONGO_CONNECTION_STRING
+uri = os.environ("MONGO_CONNECTION_STRING")
 
 # Create a new client and connect to the server
 client = MongoClient(uri)
