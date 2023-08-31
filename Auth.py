@@ -40,13 +40,6 @@ db = client['Cosmo']
 
 col = db['Users']
 
-newuser = {
-    "username": "username",
-    "password": "password",
-}
-
-
-col.insert_one(newuser)
 
 def login():
     st.write("Login")
@@ -55,7 +48,7 @@ def login():
     if st.button("Login"):
         if username in col.find():
             if password in col.find():
-                st.session_state.user = username
+                st.session_state['user'] = "Logged"
                 st.experimental_rerun()
             else:
                 st.error("Incorrect password")
@@ -70,28 +63,27 @@ def register():
     "password": password,
 }
     if st.button("Register"):
-        col.insert_one(newuser)
         if username in col.find():
             st.error("User already exists")
         else:
-            col.insert_one({"username": username, "password": password})
+            col.insert_one(newuser)
             st.success("User created")
 
 
 
 
 def main():
-    if 'user' not in st.session_state:
-        st.session_state.user = None
+    if "user" not in st.session_state:
+        st.session_state['user'] = "Guest"
         
-    if st.session_state.user is None:
+    if st.session_state['user'] == "Guest":
         with st.sidebar:
             selected = option_menu(None, ['Login', 'Register'])
         if selected == 'Login':
             login()
         elif selected == 'Register':
             register()
-    else:
+    elif st.session_state['user'] == "Logged":
         dashboard()
 
 
